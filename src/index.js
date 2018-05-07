@@ -4,17 +4,21 @@ import API_KEY from './config_keys.js';
 import SearchBar from './components/searchBar.js';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/videoList.js'																												
+import VideoDetail from './components/videoDetail.js'																												
+import './style/style.css'
 
 class App extends Component{																				//Component produces HTML 
 	constructor(props){
 		super(props)
 		this.state={
-			videos: []
+			videos: [],
+			selectedVideo: null
 		}
 
 		YTSearch({key: API_KEY, term: "surfboards"}, (apiData)=>{
 			this.setState({
-				videos: apiData
+				videos: apiData,
+				selectedVideo: apiData[0]
 			})
 		})
 	}
@@ -24,7 +28,10 @@ class App extends Component{																				//Component produces HTML
 		return (
       <div>
         <SearchBar />
-				<VideoList videos={this.state.videos} />
+				<VideoDetail video={this.state.selectedVideo}/>
+				<VideoList 
+					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+					videos={this.state.videos} />
       </div>  
     )                                     													//jsx gets transpiled to vanilla js
 	}
