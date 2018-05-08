@@ -10,24 +10,27 @@ import './style/style.css'
 class App extends Component{																				//Component produces HTML 
 	constructor(props){
 		super(props)
+
 		this.state={
 			videos: [],
 			selectedVideo: null
-		}
+		}	
+		this.videoSearch("surfboards")
+	}
 
-		YTSearch({key: API_KEY, term: "surfboards"}, (apiData)=>{
-			this.setState({
+		videoSearch(term){
+				YTSearch({key: API_KEY, term: term}, (apiData)=>{
+				this.setState({
 				videos: apiData,
 				selectedVideo: apiData[0]
 			})
 		})
-	}
-
+		}
 
 	render(){
 		return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
 				<VideoDetail video={this.state.selectedVideo}/>
 				<VideoList 
 					onVideoSelect={selectedVideo => this.setState({selectedVideo})}

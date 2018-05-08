@@ -7,10 +7,9 @@ class SearchBar extends Component {
 	}
 	//Event object describes the context/info about the event that occured
 	//Can get access to the value of the input
-	onInputChange(event){															
-		this.setState({
-			term: event.target.value
-		})
+	onInputChange(term){															
+		this.setState({term})
+		this.props.onSearchTermChange(term)
 	}
 
 	render(){
@@ -18,8 +17,7 @@ class SearchBar extends Component {
 			<div className="search-bar">
 				<input 
 					value={this.state.term}
-					onChange={this.onInputChange.bind(this)}/>
-				
+					onChange={event => this.onInputChange(event.target.value)}/>		
 			</div>
 		)
 	}
