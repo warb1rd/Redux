@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import API_KEY from './config_keys.js';
 import SearchBar from './components/searchBar.js';
 import YTSearch from 'youtube-api-search';
@@ -28,15 +29,16 @@ class App extends Component{																				//Component produces HTML
 		}
 
 	render(){
+		const videoSearch=_.debounce((term) => {this.videoSearch(term)}, 300)					// it'll call the videoSearch once every 300ms
 		return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+        <SearchBar onSearchTermChange={videoSearch}/>
 				<VideoDetail video={this.state.selectedVideo}/>
 				<VideoList 
 					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
 					videos={this.state.videos} />
       </div>  
-    )                                     													//jsx gets transpiled to vanilla js
+    )                                     																				//jsx gets transpiled to vanilla js
 	}
 }
 
