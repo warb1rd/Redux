@@ -20,7 +20,7 @@ class App extends Component{																				//Component produces HTML
 	}
 
 		videoSearch(term){
-				YTSearch({key: API_KEY, term: term}, (apiData)=>{
+				YTSearch({key: API_KEY, term: term}, (apiData) => {
 				this.setState({
 				videos: apiData,
 				selectedVideo: apiData[0]
